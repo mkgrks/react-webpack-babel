@@ -4,19 +4,18 @@ const webpack = require('webpack');
 const PORT = 3344;
 
 const config = {
-	// mode: 'production',
-	mode: 'development',
+	mode: process.env.NODE_ENV,	
 	entry: {
 		app: path.resolve(__dirname, 'index.js'),
         vendor: [
 			// e.g. js libs 
-			// 'babel-polyfill', do I need this? if yes, should this go here?
+			'babel-polyfill', // do I need this? if yes, should this go here?
 		]
 	},
 
 	output: {
 		path: path.resolve(__dirname, 'build'),
-		filename: '[name].min.js',
+		filename: '[name].js',
 		publicPath: `http://localhost:${PORT}/build/`,
 	},
 

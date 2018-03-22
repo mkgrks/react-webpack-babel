@@ -1,3 +1,4 @@
+const CleanWebpackPlugin = require('clean-webpack-plugin'); 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const config = require('./webpack.config');
@@ -5,7 +6,6 @@ const config = require('./webpack.config');
 Reflect.deleteProperty(config, 'devServer');
 Reflect.deleteProperty(config, 'plugins');
 
-// https://slack.engineering/keep-webpack-fast-a-field-guide-for-better-build-performance-f56a5995e8f1
 const uglifyOptions = {
 	arrows: false,
 	booleans: false,
@@ -32,17 +32,14 @@ const uglifyOptions = {
 	toplevel: false,
 	typeofs: false,
 	unused: false,
-
-	// Switch off all types of compression except those needed to convince
-	// react-devtools that we're using a production build
 	conditionals: true,
 	dead_code: true,
 	evaluate: true,
 };
 
 config.output = {
-	filename: '[name].bundle.js',
-	chunkFilename: '[name].bundle.js',
+	filename: '[name].[chunkhash].js',
+	chunkFilename: '[name].[chunkhash].js',
 	path: path.resolve(__dirname, 'dist'),
 };
 
@@ -52,6 +49,7 @@ Object.assign(config.output, {
 });
 
 config.plugins = [
+	new CleanWebpackPlugin(['dist']),
 	new UglifyJsPlugin({
 		cache: true,
 		parallel: true,
