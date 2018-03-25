@@ -6,10 +6,9 @@ const PORT = 3344;
 const config = {
 	mode: process.env.NODE_ENV,	
 	entry: {
-		app: path.resolve(__dirname, 'index.js'),
+		app: ['babel-polyfill', path.resolve(__dirname, 'index.js')],
         vendor: [
 			// e.g. js libs 
-			'babel-polyfill', // do I need this? if yes, should this go here?
 		]
 	},
 
@@ -51,7 +50,7 @@ const config = {
 			},
 			{
 				test: /\.styl$/,
-				use: 'style-loader!css-loader!stylus-loader',
+				use: 'style-loader!css-loader',
 				include: [
 					path.join(__dirname, 'js'),
 					path.join(__dirname, 'css'),
